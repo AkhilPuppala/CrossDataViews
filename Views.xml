@@ -1,0 +1,90 @@
+<!-- Query xml
+view xml
+output xml
+catalog -> data sources -->
+
+
+<!-- 
+SELECT 
+    i.InvoiceId, i.InvoiceDate, i.Total, 
+    il.InvoiceLineId, il.UnitPrice, il.Quantity
+FROM Invoice i
+JOIN InvoiceLine il ON i.InvoiceId = il.InvoiceId
+WHERE i.BillingCountry = 'USA';
+ -->
+
+<!-- Query in XML -->
+
+<query>
+    <select>
+        <column>i.InvoiceId</column>
+        <column>i.InvoiceDate</column>
+        <column>i.Total</column>
+        <column>il.InvoiceLineId</column>
+        <column>il.UnitPrice</column>
+        <column>il.Quantity</column>
+    </select>
+    <from>
+        <table alias="i">Invoice</table>
+    </from>
+    <join type="INNER">
+        <table alias="il">InvoiceLine</table>
+        <on>
+            <condition>i.InvoiceId = il.InvoiceId</condition>
+        </on>
+    </join>
+    <where>
+        <condition>i.BillingCountry = 'USA'</condition>
+    </where>
+</query>
+
+
+<!-- View Definition -->
+
+<View name="InvoiceSummary">
+    <!-- Tables used in the view -->
+    <Tables>
+        <Table name="Invoice" alias="i"/>
+        <Table name="InvoiceLine" alias="il"/>
+    </Tables>
+
+    <!-- Join conditions -->
+    <Joins>
+        <Join type="INNER">
+            <LeftTable alias="i"/>
+            <RightTable alias="il"/>
+            <OnCondition>i.InvoiceId = il.InvoiceId</OnCondition>
+        </Join>
+    </Joins>
+
+    <!-- Filtering conditions -->
+    <Filters>
+        <Condition>i.BillingCountry = 'USA'</Condition>
+    </Filters>
+
+    <!-- Selected columns -->
+    <Select>
+        <Column>i.InvoiceId</Column>
+        <Column>i.InvoiceDate</Column>
+        <Column>i.Total</Column>
+        <Column>il.InvoiceLineId</Column>
+        <Column>il.UnitPrice</Column>
+        <Column>il.Quantity</Column>
+    </Select>
+</View>
+
+<!-- Final query output -->
+
+<records>
+    <record>
+        <field> </field>
+        <field> </field>
+        ...
+    </record>
+    <record>
+        <field> </field>
+        <field> </field>
+        ...
+    </record>
+    ...
+</records>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <!-- Root Element -->
+  <xs:element name="root">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="row" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="InvoiceId" type="xs:int" />
+              <xs:element name="CustomerId" type="xs:int" />
+              <xs:element name="InvoiceDate" type="xs:dateTime" />
+              <xs:element name="BillingAddress" type="xs:string" />
+              <xs:element name="BillingCity" type="xs:string" />
+              <xs:element name="BillingState" type="xs:string" minOccurs="0" />
+              <xs:element name="BillingCountry" type="xs:string" />
+              <xs:element name="BillingPostalCode" type="xs:string" />
+              <xs:element name="Total" type="xs:decimal" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>
