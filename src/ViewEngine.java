@@ -7,8 +7,8 @@ import java.util.*;
 
 public class ViewEngine {
     public static void main(String[] args) {
-        View view = ViewParser.parse("View.xml");
-        Catalog catalog = CatalogParser.parse("Catalog.xml");
+        View view = ViewParser.parse("data/View.xml");
+        Catalog catalog = CatalogParser.parse("data/Catalog.xml");
 
         Map<String, List<Map<String, Object>>> tableData = new HashMap<>();
 
@@ -17,12 +17,8 @@ public class ViewEngine {
             DatabaseConnectionInfo dbInfo = catalog.databases.get(dbName);
             TableSchema schema = dbInfo.tables.get(table.name);
 
-            List<Map<String, Object>> data;
-            if (dbInfo.connection.type.equalsIgnoreCase("mysql")) {
-                data = MySQLFetcher.fetchData(table.name, dbInfo.connection, schema);
-            } else {
-                data = BaseXFetcher.fetchData(table.name, dbInfo.connection, schema);
-            }
+            Fetcher fetcher = FetcherFactory.getFetcher(dbInfo.connection.type);
+            List<Map<String, Object>> data = fetcher.fetchData(table.name, dbInfo.connection, schema);
 
             tableData.put(table.alias, data);
         }
