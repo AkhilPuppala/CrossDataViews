@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <View name="InvoiceSummary">
     <Tables>
-        <Table alias="i" name="Invoice"/>
+        <Table database = "MySQL" alias="i" name="Invoice"/>
         <Table alias="il" name="InvoiceLine"/>
         <Table alias="c" name="Customer"/>
     </Tables>
