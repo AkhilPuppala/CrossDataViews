@@ -7,8 +7,9 @@ import java.util.*;
 
 public class ViewEngine {
     public static void main(String[] args) {
-        View view = ViewParser.parse("data/View.xml");
-        Catalog catalog = CatalogParser.parse("data/Catalog.xml");
+        
+        View view = View("data/View.xml");
+        Catalog catalog = Catalog("data/Catalog.xml");
 
         Map<String, List<Map<String, Object>>> tableData = new HashMap<>();
 

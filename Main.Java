@@ -16,7 +16,7 @@ public class Main {
     public static void main(String[] args) {
         String url = "jdbc:mysql://localhost:3306/marketdb"; 
         String user = "root"; 
-        String password = "password"; 
+        String password = "passcode"; 
 
         String basexHost = "localhost";  
         int basexPort = 1984;            
