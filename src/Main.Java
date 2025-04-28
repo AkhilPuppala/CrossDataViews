@@ -11,18 +11,17 @@ import org.basex.api.client.ClientSession;
 // 2) Implementing the queries 
 // 3) Display Output 
 
-query
 
 public class Main {
     public static void main(String[] args) {
-        String url = "jdbc:mysql://localhost:3306/neil"; 
+        String url = "jdbc:mysql://localhost:3306/marketdb"; 
         String user = "root"; 
-        String password = "newpassword"; 
+        String password = "password"; 
 
-           String basexHost = "localhost";  
-           int basexPort = 1984;            
-           String basexUser = "neil";      
-           String basexPass = "newpassword";      
+        String basexHost = "localhost";  
+        int basexPort = 1984;            
+        String basexUser = "neil";      
+        String basexPass = "newpassword";      
 
 
 

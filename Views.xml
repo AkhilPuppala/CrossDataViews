@@ -88,3 +88,22 @@ WHERE i.BillingCountry = 'USA';
     </record>
     ...
 </records>
+
+<Catalog>
+    <DataBase>
+        <name></name>
+        <Connection>
+
+        </Connection>
+        <Tables>
+            <Table>
+                <TableName>
+
+                </TableName>
+                <Schema>
+                    
+                </Schema>
+            </Table>
+        </Tables>
+    </DataBase>
+</Catalog>
