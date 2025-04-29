@@ -15,6 +15,50 @@ import java.io.IOException;
 import java.util.*;
 
 public class ViewEngine {
+
+    static String mysqlUrl, mysqlUser, mysqlPassword, mysqlDbName, mysqlTableName;
+    static String basexHost, basexUser, basexPassword, basexDbName, basexTableName;
+    static int basexPort;
+
+    public static void loadConfig(String filePath) throws Exception {
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder        dBuilder = dbFactory.newDocumentBuilder();
+        Document               doc      = dBuilder.parse(new File(filePath));
+        doc.getDocumentElement().normalize();
+    
+        Element root = doc.getDocumentElement();
+        NodeList dbList = root.getElementsByTagName("DataBase");
+    
+        for (int i = 0; i < dbList.getLength(); i++) {
+            Element dbElem = (Element) dbList.item(i);
+            String  name   = dbElem.getElementsByTagName("name")
+                                .item(0)
+                                .getTextContent()
+                                .trim();
+    
+            Element conn = (Element) dbElem.getElementsByTagName("Connection").item(0);
+            String type  = conn.getElementsByTagName("type").item(0).getTextContent().trim();
+            String table = dbElem.getElementsByTagName("Table").item(0).getTextContent().trim();
+    
+            if ("mysql".equalsIgnoreCase(type)) {
+                mysqlDbName    = name;
+                mysqlUrl       = conn.getElementsByTagName("host").item(0).getTextContent().trim();
+                mysqlUser      = conn.getElementsByTagName("username").item(0).getTextContent().trim();
+                mysqlPassword  = conn.getElementsByTagName("password").item(0).getTextContent().trim();
+                mysqlTableName = table;
+            }
+            else if ("basex".equalsIgnoreCase(type)) {
+                basexDbName    = name;
+                basexHost      = conn.getElementsByTagName("host").item(0).getTextContent().trim();
+                basexPort      = Integer.parseInt(conn.getElementsByTagName("port").item(0).getTextContent().trim());
+                basexUser      = conn.getElementsByTagName("username").item(0).getTextContent().trim();
+                basexPassword  = conn.getElementsByTagName("password").item(0).getTextContent().trim();
+                basexTableName = table;
+            }
+        }
+    }
+
+
     public static void main(String[] args) {
         
         View view = new View("data/output.xml");
@@ -29,14 +73,20 @@ public class ViewEngine {
         //     TableSchema schema = dbInfo.tables.get(table.name);
 
         //     Fetcher fetcher = FetcherFactory.getFetcher(dbInfo.connection.type);
-        //     List<Map<String, Object>> data = fetcher.fetchData(table.name, dbInfo.connection, schema);
+        //     List<Map<String, Object>> data = fetcher.fetchData(table.name, dbInfo.connection);
 
         //     tableData.put(table.alias, data);
         // }
+        
+        try {
+            loadConfig("catalog.xml");
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
 
-        String url = "jdbc:mysql://localhost:3306/InvoiceLine";
-        String user = "root";
-        String password = "passcode";
+        String url = mysqlUrl;
+        String user = mysqlUser;
+        String password = mysqlPassword;
 
         MySQLFetcher f1 = new MySQLFetcher();
         ConnectionInfo connection1 = new ConnectionInfo("mysql", url, user, "passcode", "InvoiceLine", "3306");

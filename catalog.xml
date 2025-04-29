@@ -11,7 +11,7 @@
         </Connection>
         <Tables>
             <Table>
-                <InvoiceLine>InvoiceLine</InvoiceLine>
+                InvoiceLine
             </Table>
         </Tables>
     </DataBase>
