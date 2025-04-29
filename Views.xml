@@ -97,9 +97,9 @@ WHERE i.BillingCountry = 'USA';
         </Connection>
         <Tables>
             <Table>
-                <TableName>
+                <InvoiceLine>
 
-                </TableName>
+                </InvoiceLine>
                 <Schema>
                     
                 </Schema>

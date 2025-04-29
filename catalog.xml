@@ -9,7 +9,7 @@
         </Connection>
         <Tables>
             <Table>
-                <TableName>InvoiceLine</TableName>
+                <InvoiceLine>InvoiceLine</InvoiceLine>
             </Table>
         </Tables>
     </DataBase>
@@ -24,7 +24,7 @@
         </Connection>
         <Tables>
             <Table>
-                <TableName>Invoice</TableName>
+                <InvoiceLine>Invoice</InvoiceLine>
             </Table>
         </Tables>
     </DataBase>

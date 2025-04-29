@@ -6,5 +6,5 @@ import java.util.List;
 import java.util.Map;
 
 public interface Fetcher {
-    List<Map<String, Object>> fetchData(String tableName, ConnectionInfo connectionInfo, TableSchema schema);
+    List<Map<String, Object>> fetchData(String InvoiceLine, ConnectionInfo connectionInfo);
 }

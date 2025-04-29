@@ -17,7 +17,7 @@ import java.util.*;
 public class RecursiveBaseXFetcher implements Fetcher {
 
     @Override
-    public List<Map<String, Object>> fetchData(String tableName, ConnectionInfo connectionInfo, TableSchema schema) {
+    public List<Map<String, Object>> fetchData(String tableName, ConnectionInfo connectionInfo) {
         List<Map<String, Object>> result = new ArrayList<>();
         ClientSession session = null;
         try {
@@ -26,6 +26,7 @@ public class RecursiveBaseXFetcher implements Fetcher {
                                         connectionInfo.getUser(), connectionInfo.getPassword());
 
             // Open the database
+            // passcode
             session.execute(new Open(tableName));
 
             // Query all <row> elements inside <root>
@@ -115,5 +116,27 @@ public class RecursiveBaseXFetcher implements Fetcher {
         } catch (NumberFormatException e) {
             return text; // Return as String if not a number
         }
+    }
+
+    public static void main(String[] args) {
+        String url = "jdbc:mysql://localhost:3306/tableName";
+        String user = "root";
+        String password = "passcode";
+        
+        ConnectionInfo connection = new ConnectionInfo("xml","localhost","akhil","passcode","Invoice","1984");
+        
+        Fetcher fetcher = new RecursiveBaseXFetcher();
+        List<Map<String, Object>> data = fetcher.fetchData("Invoice", connection);
+
+        // Print the fetched data
+        System.out.println("Fetched Data:");
+        System.out.println("Number of records: " + data.size());
+
+        if (!data.isEmpty()) {
+            System.out.println("First Record: " + data.get(0));
+        } else {
+            System.out.println("No records found.");
+        }
+        
     }
 }

@@ -105,8 +105,8 @@ public class JoinEngine {
     
         // 3. Create 2 Join objects
         List<Join> joins = new ArrayList<>();
-        joins.add(new Join("INNER", "i", "il", "i.InvoiceId = il.InvoiceId"));    // Join Invoice and InvoiceLine
-        joins.add(new Join("INNER", "i", "c", "i.CustomerId = c.CustomerId"));    // Join Invoice and Customer
+        joins.add(new Join("INNER", "i", "il", "InvoiceId = InvoiceId"));    // Join Invoice and InvoiceLine
+        joins.add(new Join("INNER", "i", "c", "CustomerId = CustomerId"));    // Join Invoice and Customer
     
         // 4. Perform join
         List<Map<String, Object>> joinedResult = performJoins(joins, tableData);
