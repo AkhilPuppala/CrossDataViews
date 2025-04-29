@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Catalog>
     <DataBase>
-        <name>MySQL</name>
+        <name>InvoiceLine</name>
         <Connection>
-            <url>jdbc:mysql://localhost:3306/InvoiceLine</url>
+            <type>mysql</type>
+            <host>jdbc:mysql://localhost:3306/InvoiceLine</host>
+            <port>1984</port>
             <username>akhil</username>
             <password>akhil@1203</password>
         </Connection>
@@ -15,17 +17,16 @@
     </DataBase>
 
     <DataBase>
-        <name>BaseX</name>
+        <name>Invoice</name>
         <Connection>
+            <type>basex</type>
             <host>localhost</host>
             <port>1984</port>
             <username>admin</username>
             <password>admin</password>
         </Connection>
         <Tables>
-            <Table>
-                <InvoiceLine>Invoice</InvoiceLine>
-            </Table>
+            <Table>Invoice</Table>
         </Tables>
     </DataBase>
 </Catalog>

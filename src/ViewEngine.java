@@ -1,10 +1,15 @@
 import model.*;
-import parser.*;
+// import parser.*;
 import db.*;
 import engine.*;
+// import java.io.FileWriter;
+// import java.io.IOException;
+// import com.google.gson.Gson;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.io.FileWriter;
 import java.io.IOException;
-import com.google.gson.Gson;
 
 
 import java.util.*;
@@ -53,5 +58,14 @@ public class ViewEngine {
         List<Map<String, Object>> finalResult = SelectEngine.projectColumns(view.selectColumns, filtered);
 
         System.out.println(finalResult.size());
+
+        // Write finalResult to a JSON file
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        try (FileWriter writer = new FileWriter("data/output.json")) {
+            gson.toJson(finalResult, writer);
+            System.out.println("Final result has been written to data/output.json");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -1,8 +1,8 @@
 package db;
 
 import model.ConnectionInfo;
-import model.TableSchema;
-import org.basex.core.Context;
+// import model.TableSchema;
+// import org.basex.core.Context;
 import org.basex.core.cmd.Open;
 import org.basex.core.cmd.XQuery;
 import org.basex.api.client.ClientSession;
@@ -17,7 +17,7 @@ import java.util.*;
 public class RecursiveBaseXFetcher implements Fetcher {
 
     @Override
-    public List<Map<String, Object>> fetchData(String tableName, ConnectionInfo connectionInfo) {
+    public List<Map<String, Object>> fetchData(String dbName, ConnectionInfo connectionInfo) {
         List<Map<String, Object>> result = new ArrayList<>();
         ClientSession session = null;
         try {
@@ -27,7 +27,7 @@ public class RecursiveBaseXFetcher implements Fetcher {
 
             // Open the database
             // passcode
-            session.execute(new Open(tableName));
+            session.execute(new Open(dbName));
 
             // Query all <row> elements inside <root>
             String query = "for $r in /root/row return serialize($r)";
@@ -119,9 +119,9 @@ public class RecursiveBaseXFetcher implements Fetcher {
     }
 
     public static void main(String[] args) {
-        String url = "jdbc:mysql://localhost:3306/tableName";
-        String user = "root";
-        String password = "passcode";
+        // String url = "jdbc:mysql://localhost:3306/dbName";
+        // String user = "root";
+        // String password = "passcode";
         
         ConnectionInfo connection = new ConnectionInfo("xml","localhost","akhil","passcode","Invoice","1984");
         

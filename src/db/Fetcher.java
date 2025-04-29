@@ -1,7 +1,7 @@
 package db;
 
 import model.ConnectionInfo;
-import model.TableSchema;
+// import model.TableSchema;
 import java.util.List;
 import java.util.Map;
 
