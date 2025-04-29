@@ -16,7 +16,7 @@ public class MySQLFetcher implements Fetcher {
         String query = "SELECT * FROM " + tableName;
 
         try (Connection connection = DriverManager.getConnection(
-                connectionInfo.getUrl(), connectionInfo.getUsername(), connectionInfo.getPassword());
+                connectionInfo.getHost(), connectionInfo.getUser(), connectionInfo.getPassword());
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
 
@@ -31,7 +31,7 @@ public class MySQLFetcher implements Fetcher {
                 resultList.add(row);
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // Consider using a logger for better error handling
+            e.printStackTrace(); 
         }
 
         return resultList;

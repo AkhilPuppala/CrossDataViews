@@ -3,7 +3,7 @@ package db;
 public class FetcherFactory {
 
     private static final MySQLFetcher mysqlFetcher = new MySQLFetcher();
-    private static final BaseXFetcher baseXFetcher = new BaseXFetcher();
+    private static final RecursiveBaseXFetcher baseXFetcher = new RecursiveBaseXFetcher();
 
     public static Fetcher getFetcher(String dbType) {
         if (dbType.equalsIgnoreCase("mysql")) {

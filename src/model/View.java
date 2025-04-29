@@ -9,6 +9,6 @@ public class View {
     public List<String> selectColumns;
 
     public View(String fileName) {
-
+        
     }
 }
