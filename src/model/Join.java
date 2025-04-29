@@ -12,4 +12,11 @@ public class Join {
         this.rightAlias = rightAlias;
         this.onCondition = onCondition;
     }
+     @Override
+    public String toString() {
+        return String.format(
+            "Join(type=%s, left=%s, right=%s, on=%s)",
+            type, leftAlias, rightAlias, onCondition
+        );
+    }
 }
