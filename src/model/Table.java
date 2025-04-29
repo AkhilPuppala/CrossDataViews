@@ -8,4 +8,8 @@ public class Table {
         this.alias = alias;
         this.name = name;
     }
+     @Override
+    public String toString() {
+        return String.format("Table(alias=%s, name=%s)", alias, name);
+    }
 }
