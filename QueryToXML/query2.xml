@@ -13,15 +13,15 @@
         <table alias="i">Invoice</table>
     </from>
     <join type="INNER">
-        <table alias="il">InvoiceLine</table>
-        <on>
-            <condition>i.InvoiceId = il.InvoiceId</condition>
-        </on>
-    </join>
-    <join type="INNER">
         <table alias="c">Customer</table>
         <on>
             <condition>i.CustomerId = c.CustomerId</condition>
+        </on>
+    </join>
+    <join type="INNER">
+        <table alias="il">InvoiceLine</table>
+        <on>
+            <condition>i.InvoiceId = il.InvoiceId</condition>
         </on>
     </join>
     <where>

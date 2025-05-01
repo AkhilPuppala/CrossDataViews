@@ -71,39 +71,56 @@ public class RecursiveBaseXFetcher implements Fetcher {
 
     private void parseElement(Element element, Map<String, Object> map) {
         NodeList children = element.getChildNodes();
+        Map<String, List<Element>> grouped = new LinkedHashMap<>();
+    
+        // Group child elements by tag name
         for (int i = 0; i < children.getLength(); i++) {
             Node child = children.item(i);
             if (child.getNodeType() == Node.ELEMENT_NODE) {
                 Element childElement = (Element) child;
-                NodeList grandChildren = childElement.getChildNodes();
-                boolean hasElementChild = false;
-
-                for (int j = 0; j < grandChildren.getLength(); j++) {
-                    if (grandChildren.item(j).getNodeType() == Node.ELEMENT_NODE) {
-                        hasElementChild = true;
-                        break;
-                    }
-                }
-
-                if (hasElementChild) {
-                    // Nested structure: example <Items><Item>1</Item><Item>2</Item></Items>
-                    List<Object> list = new ArrayList<>();
-                    for (int k = 0; k < grandChildren.getLength(); k++) {
-                        Node nested = grandChildren.item(k);
-                        if (nested.getNodeType() == Node.ELEMENT_NODE) {
-                            Element nestedElement = (Element) nested;
-                            list.add(tryParseNumber(nestedElement.getTextContent().trim()));
-                        }
-                    }
-                    map.put(childElement.getTagName(), list);
-                } else {
-                    // Simple text field
-                    String textContent = childElement.getTextContent().trim();
-                    Object value = tryParseNumber(textContent);
-                    map.put(childElement.getTagName(), value);
-                }
+                grouped.computeIfAbsent(childElement.getTagName(), k -> new ArrayList<>()).add(childElement);
             }
         }
+    
+        for (Map.Entry<String, List<Element>> entry : grouped.entrySet()) {
+            String tag = entry.getKey();
+            List<Element> elements = entry.getValue();
+    
+            if (elements.size() == 1) {
+                // Only one element: either leaf or nested object
+                Element single = elements.get(0);
+                if (hasElementChildren(single)) {
+                    Map<String, Object> nestedMap = new HashMap<>();
+                    parseElement(single, nestedMap);
+                    map.put(tag, nestedMap);
+                } else {
+                    map.put(tag, tryParseNumber(single.getTextContent().trim()));
+                }
+            } else {
+                // Multiple elements with same tag: treat as list
+                List<Object> list = new ArrayList<>();
+                for (Element e : elements) {
+                    if (hasElementChildren(e)) {
+                        Map<String, Object> nestedMap = new HashMap<>();
+                        parseElement(e, nestedMap);
+                        list.add(nestedMap);
+                    } else {
+                        list.add(tryParseNumber(e.getTextContent().trim()));
+                    }
+                }
+                map.put(tag, list);
+            }
+        }
+    }
+    
+    private boolean hasElementChildren(Element element) {
+        NodeList children = element.getChildNodes();
+        for (int i = 0; i < children.getLength(); i++) {
+            if (children.item(i).getNodeType() == Node.ELEMENT_NODE) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private Object tryParseNumber(String text) {
@@ -119,24 +136,63 @@ public class RecursiveBaseXFetcher implements Fetcher {
     }
 
     public static void main(String[] args) {
-        // String url = "jdbc:mysql://localhost:3306/dbName";
-        // String user = "root";
-        // String password = "passcode";
-        
-        ConnectionInfo connection = new ConnectionInfo("xml","localhost","akhil","passcode","Invoice","1984");
-        
-        Fetcher fetcher = new RecursiveBaseXFetcher();
-        List<Map<String, Object>> data = fetcher.fetchData("Invoice", connection);
-
-        // Print the fetched data
-        System.out.println("Fetched Data:");
-        System.out.println("Number of records: " + data.size());
-
-        if (!data.isEmpty()) {
-            System.out.println("First Record: " + data.get(0));
-        } else {
-            System.out.println("No records found.");
+        RecursiveBaseXFetcher fetcher = new RecursiveBaseXFetcher();
+    
+        String[] xmlRows = {
+            """
+            <row>
+                <AId>1</AId>
+                <Name>Alice</Name>
+                <Age>21</Age>
+                <Address>
+                    <City>New York</City>
+                    <Zip>10001</Zip>
+                </Address>
+                <Scores>
+                    <Score>95</Score>
+                    <Score>89</Score>
+                </Scores>
+            </row>
+            """,
+            """
+            <row>
+                <AId>2</AId>
+                <Name>Bob</Name>
+                <Age>25</Age>
+                <Address>
+                    <City>Los Angeles</City>
+                    <Zip>90001</Zip>
+                </Address>
+                <Scores>
+                    <Score>82</Score>
+                    <Score>76</Score>
+                </Scores>
+            </row>
+            """,
+            """
+            <row>
+                <AId>3</AId>
+                <Name>Charlie</Name>
+                <Age>23</Age>
+                <Address>
+                    <City>Chicago</City>
+                    <Zip>60601</Zip>
+                </Address>
+                <Scores>
+                    <Score>88</Score>
+                    <Score>91</Score>
+                </Scores>
+            </row>
+            """
+        };
+    
+        List<Map<String, Object>> results = new ArrayList<>();
+        for (String xml : xmlRows) {
+            results.add(fetcher.parseXmlRow(xml));
         }
         
+        System.out.println(results);
+        
     }
+    
 }

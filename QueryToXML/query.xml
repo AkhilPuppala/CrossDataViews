@@ -1,11 +1,11 @@
 <query>
     <select>
-        <column>i.InvoiceId</column>
-        <column>i.InvoiceDate</column>
-        <column>i.Total</column>
-        <column>il.InvoiceLineId</column>
-        <column>il.UnitPrice</column>
-        <column>il.Quantity</column>
+        <column>InvoiceId</column>
+        <column>InvoiceDate</column>
+        <column>Total</column>
+        <column>InvoiceLineId</column>
+        <column>UnitPrice</column>
+        <column>Quantity</column>
     </select>
     <from>
         <table alias="i">Invoice</table>
@@ -13,10 +13,10 @@
     <join type="INNER">
         <table alias="il">InvoiceLine</table>
         <on>
-            <condition>i.InvoiceId = il.InvoiceId</condition>
+            <condition>InvoiceId = InvoiceId</condition>
         </on>
     </join>
     <where>
-        <condition>i.BillingCountry = 'USA'</condition>
+        <condition>BillingCountry = 'USA'</condition>
     </where>
 </query>

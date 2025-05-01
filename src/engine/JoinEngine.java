@@ -46,75 +46,56 @@ public class JoinEngine {
         return joined;
     }
 
-    // -----------------------
-    // 🧪 Hardcoded test here:
     public static void main(String[] args) {
-        // 1. Hardcoded table data
-        List<Map<String, Object>> invoiceTable = new ArrayList<>();
-        List<Map<String, Object>> invoiceLineTable = new ArrayList<>();
-        List<Map<String, Object>> customerTable = new ArrayList<>();
+        // Table a
+        List<Map<String, Object>> tableA = new ArrayList<>();
+        for (int i = 1; i <= 10; i++) {
+            Map<String, Object> row = new HashMap<>();
+            row.put("AId", i);
+            row.put("Name", "Name" + i);
+            row.put("Age", 20 + i);
+            tableA.add(row);
+        }
     
-        // Invoice table (alias i)
-        Map<String, Object> invoice1 = new HashMap<>();
-        invoice1.put("InvoiceId", 1);
-        invoice1.put("CustomerId", 101);
-        invoice1.put("Total", 200.0);
-        invoiceTable.add(invoice1);
+        // Table b
+        List<Map<String, Object>> tableB = new ArrayList<>();
+        for (int i = 1; i <= 10; i++) {
+            Map<String, Object> row = new HashMap<>();
+            row.put("AId", i);  // matches AId from tableA
+            row.put("BId", i + 100);
+            row.put("Score", 50 + i);
+            tableB.add(row);
+        }
     
-        Map<String, Object> invoice2 = new HashMap<>();
-        invoice2.put("InvoiceId", 2);
-        invoice2.put("CustomerId", 102);
-        invoice2.put("Total", 400.0);
-        invoiceTable.add(invoice2);
+        // Table c
+        List<Map<String, Object>> tableC = new ArrayList<>();
+        for (int i = 101; i <= 110; i++) {
+            Map<String, Object> row = new HashMap<>();
+            row.put("BId", i); // matches BId from tableB
+            row.put("City", "City" + (i - 100));
+            row.put("Zip", "1000" + (i - 100));
+            tableC.add(row);
+        }
     
-        // InvoiceLine table (alias il)
-        Map<String, Object> line1 = new HashMap<>();
-        line1.put("InvoiceId", 1);
-        line1.put("InvoiceLineId", 1001);
-        line1.put("Quantity", 5);
-        invoiceLineTable.add(line1);
-    
-        Map<String, Object> line2 = new HashMap<>();
-        line2.put("InvoiceId", 1);
-        line2.put("InvoiceLineId", 1002);
-        line2.put("Quantity", 3);
-        invoiceLineTable.add(line2);
-    
-        Map<String, Object> line3 = new HashMap<>();
-        line3.put("InvoiceId", 3);
-        line3.put("InvoiceLineId", 1003);
-        line3.put("Quantity", 2);
-        invoiceLineTable.add(line3);
-    
-        // Customer table (alias c)
-        Map<String, Object> cust1 = new HashMap<>();
-        cust1.put("CustomerId", 101);
-        cust1.put("ContactName", "John Doe");
-        customerTable.add(cust1);
-    
-        Map<String, Object> cust2 = new HashMap<>();
-        cust2.put("CustomerId", 102);
-        cust2.put("ContactName", "Jane Smith");
-        customerTable.add(cust2);
-    
-        // 2. Prepare tableData map
+        // Put into tableData map with aliases
         Map<String, List<Map<String, Object>>> tableData = new HashMap<>();
-        tableData.put("i", invoiceTable);
-        tableData.put("il", invoiceLineTable);
-        tableData.put("c", customerTable);
+        tableData.put("a", tableA);
+        tableData.put("b", tableB);
+        tableData.put("c", tableC);
     
-        // 3. Create 2 Join objects
+        // Define joins
         List<Join> joins = new ArrayList<>();
-        joins.add(new Join("INNER", "i", "il", "InvoiceId = InvoiceId"));    // Join Invoice and InvoiceLine
-        joins.add(new Join("INNER", "i", "c", "CustomerId = CustomerId"));    // Join Invoice and Customer
+        joins.add(new Join("INNER", "a", "b", "AId = AId"));   // a.AId = b.AId
+        joins.add(new Join("INNER", "b", "c", "BId = BId"));   // b.BId = c.BId
     
-        // 4. Perform join
-        List<Map<String, Object>> joinedResult = performJoins(joins, tableData);
+        // Perform joins
+        List<Map<String, Object>> result = performJoins(joins, tableData);
     
-        // 5. Print output
+        // Print results
         System.out.println("Joined Result:");
-        for (Map<String, Object> row : joinedResult) {
+        for (Map<String, Object> row : result) {
             System.out.println(row);
         }
-    }    
+    }
+    
 }
