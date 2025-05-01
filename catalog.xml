@@ -6,8 +6,8 @@
             <type>mysql</type>
             <host>jdbc:mysql://localhost:3306/InvoiceLine</host>
             <port>1984</port>
-            <username>akhil</username>
-            <password>akhil@1203</password>
+            <username>root</username>
+            <password>passcode</password>
         </Connection>
         <Tables>
             <Table>
@@ -22,8 +22,8 @@
             <type>basex</type>
             <host>localhost</host>
             <port>1984</port>
-            <username>admin</username>
-            <password>admin</password>
+            <username>akhil</username>
+            <password>passcode</password>
         </Connection>
         <Tables>
             <Table>Invoice</Table>

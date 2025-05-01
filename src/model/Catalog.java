@@ -12,6 +12,16 @@ import org.w3c.dom.*;
 
 public class Catalog {
     public Map<String, DatabaseInfo> databases = new HashMap<>(); // dbName -> connection and list of tables
+
+
+    public String getDbNameForTable(String tableName) {
+        for (Map.Entry<String, DatabaseInfo> entry : databases.entrySet()) {
+            if (entry.getValue().tables.contains(tableName)) {
+                return entry.getKey();
+            }
+        }
+        return "";
+    }
     
     private static String text(Element parent, String tag) {
         NodeList nl = parent.getElementsByTagName(tag);
@@ -63,14 +73,18 @@ public class Catalog {
                         tables.add(tbl);
                     }
                 }
-    
+                
+                ConnectionInfo connection = new ConnectionInfo(
+                    type,   // type
+                    host,   // host
+                    user,   // user
+                    password,// password
+                    name,   // dbName (same as <name>)
+                    port   // port
+                );
+
                 DatabaseInfo info = new DatabaseInfo(
-                        type,   // type
-                        host,   // host
-                        user,   // user
-                        password,// password
-                        name,   // dbName (same as <name>)
-                        port,   // port
+                        connection,
                         tables
                     );
     

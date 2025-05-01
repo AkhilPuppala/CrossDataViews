@@ -27,15 +27,18 @@ public class ViewEngine {
 
         for (Table table : view.tables) {
             System.out.println(table.name);
-            // String dbName = catalog.getDatabaseForTable(table.name);
-            // DatabaseConnectionInfo dbInfo = catalog.databases.get(dbName);
-            // TableSchema schema = dbInfo.tables.get(table.name);
+            String dbName = catalog.getDbNameForTable(table.name);
+            System.out.println(dbName);
+            DatabaseInfo dbInfo = catalog.databases.get(dbName);
+            
 
-            // Fetcher fetcher = FetcherFactory.getFetcher(dbInfo.connection.type);
-            // List<Map<String, Object>> data = fetcher.fetchData(table.name, dbInfo.connection);
+            Fetcher fetcher = FetcherFactory.getFetcher(dbInfo.connection.type);
+            List<Map<String, Object>> data = fetcher.fetchData(table.name, dbInfo.connection);
 
-            // tableData.put(table.alias, data);
+            tableData.put(table.alias, data);
         }
+
+
         
         
         // String url = mysqlUrl;
@@ -57,19 +60,19 @@ public class ViewEngine {
         // tableData.put("i", d2);
         // tableData.put("il", d1);
         
-        // List<Map<String, Object>> joined = JoinEngine.performJoins(view.joins, tableData);
-        // List<Map<String, Object>> filtered = FilterEngine.applyFilters(view.filters, joined);
-        // List<Map<String, Object>> finalResult = SelectEngine.projectColumns(view.selectColumns, filtered);
+        List<Map<String, Object>> joined = JoinEngine.performJoins(view.joins, tableData);
+        List<Map<String, Object>> filtered = FilterEngine.applyFilters(view.filters, joined);
+        List<Map<String, Object>> finalResult = SelectEngine.projectColumns(view.selectColumns, filtered);
 
-        // System.out.println(finalResult.size());
+        System.out.println(finalResult.size());
 
-        // // Write finalResult to a JSON file
-        // Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        // try (FileWriter writer = new FileWriter("data/output.json")) {
-        //     gson.toJson(finalResult, writer);
-        //     System.out.println("Final result has been written to data/output.json");
-        // } catch (IOException e) {
-        //     e.printStackTrace();
-        // }
+        // Write finalResult to a JSON file
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        try (FileWriter writer = new FileWriter("data/output.json")) {
+            gson.toJson(finalResult, writer);
+            System.out.println("Final result has been written to data/output.json");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

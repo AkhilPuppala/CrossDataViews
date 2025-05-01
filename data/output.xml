@@ -12,7 +12,7 @@
         </Join>
     </Joins>
     <Filters>
-        <Condition>BillingCountry = 'USA'</Condition>
+        <Condition>BillingCountry = 'Germany'</Condition>
     </Filters>
     <Select>
         <Column>InvoiceId</Column>
