@@ -1,7 +1,7 @@
 # Instructions for Running the Application
 
 ## Overview
-This project processes query XML files, transforms them into view XML files, and generates output JSON files using a catalog XML file. The workflow is managed using a configuration file (`config/config.xml`).
+This Application processes query XML files, transforms them into view XML files, and generates output JSON files using a catalog XML file. The workflow is managed using a configuration file (`config/config.xml`).
 
 ---
 
