@@ -1,0 +1,22 @@
+<query>
+    <select>
+        <column>InvoiceId</column>
+        <column>InvoiceDate</column>
+        <column>Total</column>
+        <column>InvoiceLineId</column>
+        <column>UnitPrice</column>
+        <column>Quantity</column>
+    </select>
+    <from>
+        <table alias="i">Invoice</table>
+    </from>
+    <join type="INNER">
+        <table alias="il">InvoiceLine</table>
+        <on>
+            <condition>InvoiceId = InvoiceId</condition>
+        </on>
+    </join>
+    <where>
+        <condition>BillingCountry = 'Germany'</condition>
+    </where>
+</query>

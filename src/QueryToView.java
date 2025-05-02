@@ -5,16 +5,18 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 
-public class queryToView {
-    public static void main(String[] args) {
-        if (args.length < 1) {
-            System.out.println("Usage: java queryToView <input-xml-file>");
-            return;
-        }
+public class QueryToView {
 
+    /**
+     * Transforms an input XML query file into a view XML file.
+     *
+     * @param inputFilePath  The path to the input XML file.
+     * @param outputFilePath The path to the output XML file.
+     */
+    public static void transformQueryToView(String inputFilePath, String outputFilePath) {
         try {
-            File inputFile = new File(args[0]);
-            File outputFile = new File("output.xml");
+            File inputFile = new File(inputFilePath);
+            File outputFile = new File(outputFilePath);
 
             // Load and parse input XML
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -116,10 +118,17 @@ public class queryToView {
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.transform(new DOMSource(outputDoc), new StreamResult(outputFile));
 
-            System.out.println("Transformation complete. Output saved to output.xml.");
+            System.out.println("Transformation complete. Output saved to " + outputFilePath);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void main(String[] args) {
+        String queryFilePath = "queries/query.xml";
+        String viewFilePath = "viewDefinitions/view1.xml";
+        
+        transformQueryToView(queryFilePath,viewFilePath);
     }
 }

@@ -1,0 +1,6 @@
+<Configuration>
+    <QueryFilePath>queries/query2.xml</QueryFilePath>
+    <ViewFilePath>viewDefinitions/view2.xml</ViewFilePath>
+    <CatalogFilePath>config/catalog.xml</CatalogFilePath>
+    <OutputFilePath>outputs/output2.json</OutputFilePath>
+</Configuration>
